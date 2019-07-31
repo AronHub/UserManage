@@ -1,0 +1,143 @@
+h2{
+	margin-left: 160px;
+} 
+.serch{
+	margin-top: 16px;
+	margin-left: 200px;
+	
+}
+#exedown{
+	margin-left: 290px;
+}   
+.pageCont{
+	margin-top: 10px; 
+}
+.toal{
+	margin-left: 100px; 
+}
+.mubu{
+	position:absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	background-color:#cacaca;
+	opacity:0.5;
+	filter:alpha(opacity=50)
+	z-index: 3px;
+	display: none;
+}
+.loading{
+	color:yellow;
+	display: none;
+	position: absolute;
+	top:40%;
+	left: 40%;
+	
+}
+
+.addView{
+	width: 280px;
+	height: 150px;
+	border: 1px solid #c0c0c0;
+	background-color:white;
+	border-radius:10px 10px;
+	position: absolute;
+	top:42%;
+	left:42%;	
+	display: none;
+}
+ 
+.addCont{
+	margin-left: 39px;  
+	margin-top: 30px;
+}
+.add_sure{
+	margin-top: 20px;
+	margin-left: 60px;
+}
+
+.deltView{
+	width: 230px;
+	height: 130px;
+	border: 1px solid #c0c0c0;
+	border-radius:10px 10px;
+	background-color: white;
+	position: absolute;
+	top:40%;
+	left:40%;
+	display: none;
+}
+
+.deltCont{
+	margin-left: 60px;
+	margin-top: 30px; 
+}
+.del_sure{
+	margin-top: 10px;
+}
+
+.upexport{
+	width: 300px;  
+	height: 130px;
+	border:1px solid #c0c0c0;
+	border-radius:10px 10px;
+	background-color: white;
+	position: absolute;
+	top:43%;
+	left: 43%;
+}
+.upexCont{
+	margin-top: 20px; 
+	margin-left: 5px;
+}
+.subm{
+	margin-top: 10px;
+	margin-left: 130px;
+}
+.deleAllView{
+	width:290px;
+	height: 130px;
+	border:1px solid #c0c0c0;
+	border-radius:10px 10px;
+	background-color:white;
+	position:absolute;
+	left:43%;
+    top:43%;
+    display:none;
+ 
+}
+
+.delteAl{
+	margin-left:70px;
+	margin-top:30px;
+	
+} 
+ 
+.delAll_sure{
+	margin-left:10px;
+	margin-top:9px;
+	
+}
+.updatView{
+	width: 320px;
+	height: 160px;
+	border: 1px solid #c0c0c0;
+	border-radius:10px 10px;
+	background-color: white;
+	position: absolute;
+	top:43%;
+	left: 43%;
+	display: none;
+}
+
+.updatCont{
+	margin-top: 30px;
+	margin-left: 39px;
+}
+.up_sure{
+	margin-top: 9px;
+	margin-left:60px;
+}
+
+

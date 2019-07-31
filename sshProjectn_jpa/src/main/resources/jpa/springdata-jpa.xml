@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:repository="http://www.springframework.org/schema/data/repository" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation=" 
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd 
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd 
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+	http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd 
+	http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+ 
+      
+     <!-- JPA实体管理工厂的配置 -->  
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">   
+        <property name="dataSource" ref="dataSource"/>  
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>  
+        <property name="packagesToScan" value="com.fjt.pojo"/><!--待扫描的实体类包，不再需要persistence.xml了-->  
+       
+        <!-- 指定JPA持久化提供商，此处使用Hibernate实现HibernatePersistence类 -->
+		 <property name="persistenceProvider" ref="persistenceProvider" />
+		<!--此处为HibernateJpaDialect-->
+		<property name="jpaDialect" ref="jpaDialect" /> 
+		
+        <property name="jpaProperties">  
+            <props>  
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>  
+                <prop key="hibernate.show_sql">true</prop>  
+            </props>  
+        </property>  
+    </bean> 
+    
+     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+    
+    <bean id="persistenceProvider" class="org.hibernate.ejb.HibernatePersistence" />
+    
+     <!--指定实现JPA的适配器-->  
+     <bean id="hibernateJpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="generateDdl" value="true" />
+		<property name="database" value="ORACLE" />
+	</bean>
+	
+     <!-- Jpa 事务配置 -->  
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">  
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>  
+    </bean>  
+    
+    <!-- 使用annotation定义事务 -->  
+   <tx:annotation-driven transaction-manager="transactionManager" />  
+    
+   
+     <!-- Spring Data Jpa配置 -->  
+   <jpa:repositories base-package="com.fjt.repositery"  
+       repository-impl-postfix="Impl"
+       transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory"/>  
+    
+ 
+</beans>

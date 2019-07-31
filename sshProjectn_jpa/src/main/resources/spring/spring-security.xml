@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+  <beans:beans xmlns="http://www.springframework.org/schema/security"  
+    xmlns:b="http://www.springframework.org/schema/beans" xmlns:beans="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">  
+
+  <http pattern="/" security="none"/>
+
+ 
+  <http>  
+  <!-- 指定登录页面 -->
+  <!--登录时如果登录成功了会跳转到default-target-url设置的地址，如果登录失败了，则会跳到authentication-failure-url上去    -->
+  <!-- 这边配置的路径是根据@requestMapping的路径来写的 -->
+  <form-login login-page="/" 
+           default-target-url="/logMain"  
+           authentication-failure-url="/"/> 
+           
+   <!--如果是注销，也有一个默认的规则，就是访问根目录下的j_spring_security_logout就可以了，注销之后页面会跳转到logout-success-url。  -->
+  <!--  <logout logout-success-url="/" /> -->
+   
+   <!-- 配置权限拦截，访问所有url，都需要用户登录，且拥有ROLE_USER权限 -->
+   <intercept-url pattern="/*" access="ROLE_USER"/>
+   </http>    
+  
+  <!-- 配置认证管理器 -->  
+  <!--如果用户名为admin，密码为123456的用户成功登录了，它的角色是ROLE_USER ,那么他可以访问指定的资源。 -->
+ <authentication-manager>
+	       <authentication-provider>
+	           <user-service>
+               <user name="admin" authorities="ROLE_USER" password="123456"/>
+	           </user-service>
+	       </authentication-provider>
+ </authentication-manager> 
+ 
+ 
+</beans:beans>

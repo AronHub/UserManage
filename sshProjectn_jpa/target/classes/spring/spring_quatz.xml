@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	    http://www.springframework.org/schema/cache 
+        http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+  <!-- ======================== 调度工厂 配置======================== --> 
+  <bean id="myscheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+      <property name="triggers">
+          <list>
+              <ref bean="myTriggersA"/>
+          </list>
+      </property>
+      <property name="autoStartup" value="true"></property>
+  </bean>
+  
+  <!-- ======================== 触发器配置 ======================== --> 
+  <bean id="myTriggersA" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+      <property name="jobDetail" ref="myJobDetailA"></property>
+      
+      <!-- 这里是配置core表达式 -->
+      <property name="cronExpression">
+          <value>0/3 5 15 * * ?</value>
+      </property>
+  </bean>
+  
+  <!-- ======================== 任务的配置 ======================== --> 
+  <bean id="myJobDetailA" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+     <!--   这里的myJobA 是执行的目标类名 -->
+      <property name="targetObject" ref="myJobA"></property>
+     <!--  这里的work是执行的目标类的方法 -->
+      <property name="targetMethod" value="work"></property>
+       <!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+      <property name="concurrent" value="false"></property> 
+  </bean>
+  
+  
+ 
+    
+		
+</beans>

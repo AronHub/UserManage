@@ -1,0 +1,169 @@
+.mubu{
+	background-color: #acacac;
+	position: absolute;
+	top:0;
+	left:0;
+	opacity:0.5;
+	filter:alpha(opacity=50)
+	z-index:3px;
+	width: 100%;
+	height: 100%;
+	display: none;
+	
+	
+}
+
+
+h2{
+	margin-left: 180px;
+	
+}
+
+.serch{
+	margin-left: 200px;
+	margin-top: 13px; 
+} 
+.repotDown{ 
+	float: left;
+}
+.reportUp{
+	
+	margin-left: 300px;
+	
+}
+
+table{ 
+	border: 2px solid #808080;
+	margin-top: 10px;
+	margin-left: 39px;
+}
+
+.prepage,.pagema,.aferpage{
+	float: left;
+}
+
+.pageView{
+	margin-top: 15px;
+}
+
+.jumpt{
+	margin-left: 70px;
+}
+.crudView{
+	margin-top: 10px;
+}
+
+.addView{
+	width: 400px;
+	height: 150px;
+	border:1px solid gray;
+	border-radius:10px 10px; 
+	background-color:white;
+	position: absolute;
+	z-index: 10;
+	top: 37%;
+	left: 41%;
+
+	display: none;
+}
+
+.addcont{
+	margin-left: 70px;
+	margin-top: 30px;
+}
+
+.ad_save{
+	margin-top: 10px;
+	margin-left: 80px;
+}
+
+.noFind{
+	margin-left: 180px;
+    display: none;
+}
+.deletView{
+	width: 230px;
+	height: 130px;
+	background-color:white;
+	border-radius:10px 10px;
+	border:2px solid #c0c0c0;
+	position:absolute;
+	top:40%;
+	left:40%; 
+	display: none;
+}
+.delet{
+	margin-left: 60px;
+	margin-top: 30px;
+}
+.del_sure{
+margin-top: 20px;
+	}
+
+.delallView{
+	width: 230px;
+	height: 130px;
+	background-color:white;
+	border-radius:10px 10px;
+	border:2px solid #c0c0c0;
+	position:absolute;
+	top:40%;
+	left:40%; 
+	display: none;
+}	
+ 
+.delall{
+	margin-left: 60px;
+	margin-top: 30px;
+}
+
+.deall_sure{
+	margin-top: 20px;
+}	
+	
+.updaView{
+	width: 290px;
+	height: 130px;
+	background-color: white;
+	border:1px solid #c0c0c0;
+	border-radius:10px 10px;
+	position: absolute;
+	top: 40%;
+	left: 40%;
+	display:none;
+}	
+
+.updaCont{
+	margin-left: 30px;
+	margin-top: 20px;
+}
+.up_sure{
+	margin-top: 17px;
+	margin-left: 60px; 
+}
+	
+#repotUpView{
+	width: 320px;
+	height: 130px;
+	border: 1px solid #c0c0c0;
+	border-radius:10px 10px;
+	position: absolute;
+	top:43%;
+	left: 43%;
+	background-color: while;
+	display: none;
+}
+
+.reprotCont{
+	margin-top: 18px;
+	margin-left: 19px;
+}
+.sub{
+	margin-left: 130px;
+	margin-top: 20px;
+}
+	
+	
+	
+	
+	

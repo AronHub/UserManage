@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+	<!-- spring security的过滤器链，用来代理security的过滤器 -->
+	 <!-- <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>   -->
+
+	    	
+	<!-- 以下是log4j的配置 -->
+	<context-param>    
+       <param-name>webAppRootKey</param-name>    
+       <param-value>Myframorm.root</param-value>    
+    </context-param>
+     
+	<context-param>  
+    <param-name>log4jConfigLocation</param-name>  
+    <param-value>classpath:log4j.properties</param-value>  
+    </context-param>  
+
+	<context-param>    
+        <param-name>log4jRefreshInterval</param-name>    
+        <param-value>3000</param-value>    
+   </context-param> 
+   
+	
+   <listener>  
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>  
+   </listener> 
+   
+	<!-- 解决JPA延迟加载Session失效问题的过滤器 -->
+  <filter>
+		<filter-name>springOpenEntityManagerInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springOpenEntityManagerInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> 
+<!-- Spring MVC servlet -->  
+    <servlet>  
+        <servlet-name>SpringMVC</servlet-name>  
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+        <init-param>  
+            <param-name>contextConfigLocation</param-name>  
+            <param-value>classpath:spring/spring-mvc.xml</param-value>  
+        </init-param>  
+         
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>ExportDown</display-name>
+    	<servlet-name>ExportDown</servlet-name>
+    	<servlet-class>com.fjt.util.ExportDown</servlet-class>
+    </servlet>  
+    <servlet-mapping>  
+        <servlet-name>SpringMVC</servlet-name>  
+        <!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->  
+        <url-pattern>/</url-pattern>  
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>ExportDown</servlet-name>
+    	<url-pattern>/ExportDown</url-pattern>
+    </servlet-mapping> 
+    
+     <!--加载Spring的配置文件到上下文中去-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+
+		<param-value>classpath:spring/hibernate_spring.xml</param-value>
+	</context-param>
+    <!-- Spring监听器 -->
+	<listener>
+			<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+</web-app>

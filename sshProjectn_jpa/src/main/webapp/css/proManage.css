@@ -1,0 +1,58 @@
+h2{
+	margin-left: 210px;
+}
+#mubu{
+	position:absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	background-color:#cacaca;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+	z-index: 3px;
+	display: none; 
+	
+}
+
+.serch{
+	margin-left: 190px;
+	margin-top: 10px;
+}
+
+.reprotView{
+	width: 360px; 
+	height: 150px;
+	
+	border: 1px solid #c0c0c0;
+	background-color:white;
+	border-radius:10px 10px;
+	position: absolute;
+	top:42%;
+	left:42%;	
+	display: none;
+	
+}
+
+.reportCont{
+	margin-left: 60px;
+	margin-top: 20px;	
+}
+
+#xj{
+	margin-left: 60px;
+	margin-top: 10px;
+}
+.reportDown{
+	margin-left: 330px;
+}
+.content{
+	margin-left: 50px;
+}
+.pageViw{
+	margin-top: 10px;
+}
+.toal{
+	
+	margin-left: 70px;
+}
