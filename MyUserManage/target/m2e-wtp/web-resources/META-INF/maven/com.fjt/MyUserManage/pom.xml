@@ -1,0 +1,353 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.fjt</groupId>
+  <artifactId>MyUserManage</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>MyUserManage Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+     <!-- poi的jar包 -->
+     <poi-version>3.7</poi-version>
+     <!-- spring需要的jar包 --> 
+     <org.springframework.version>3.2.8.RELEASE</org.springframework.version>
+     <!--log4j需要的jar包  -->
+     <log4j-version>1.2.17</log4j-version>
+     <!-- mysql需要的jar包 -->
+     <mysql-connector-version>5.1.21</mysql-connector-version>
+     <!-- jstl需要的jar包 -->
+     <jstl-version>1.2</jstl-version>
+     <commons-dbcp-version>1.4</commons-dbcp-version>
+     <!-- 下面4个是jsonobject使用的依赖包 -->
+     <commons-lang-version>2.6</commons-lang-version>
+     <commons-beanutils-version>1.8.3</commons-beanutils-version>
+	 <commons-collections-version>3.2.1</commons-collections-version>
+	 <json-lib-version>2.4</json-lib-version>
+	 <!-- quartz需要的jar包 -->
+	 <quartz-version>2.2.1</quartz-version>	
+	  <!-- hibernate 需要的包 -->
+	 <hiberte-version>4.1.8.Final</hiberte-version>	
+	  <!-- ehcache的jar包 -->
+	 <ehcache-version>2.7.4</ehcache-version>
+	 <!-- oracle的jar包 -->
+	 <oracle-version>10.2.0.1.0</oracle-version>
+	 <!-- slf4j的jar包 -->
+	 <slf4j-version>1.7.2</slf4j-version>
+	 <!-- jpa整合spring需要的jar包 -->
+	 <spring-data-jpa-version>1.5.2.RELEASE</spring-data-jpa-version>
+	 <!-- spring-security的jar包 -->
+	 <org-springframework-security>3.1.3.RELEASE</org-springframework-security>
+	 <!-- springmvc处理json需要的jar包 -->
+	 <jackson-version>2.8.6</jackson-version>
+	  <!-- 文件上传需要的包 -->
+	 <commons-fileupload-version>1.3</commons-fileupload-version>
+     <commons-io-version>2.0.1</commons-io-version>
+     <!-- GSON的jar包 -->
+      <gson-version>2.2.4</gson-version>
+  </properties>
+  
+   
+  
+  
+  <dependencies>
+   <dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>${gson-version}</version>
+	</dependency>
+    
+  <!-- 文件上传需要的包 -->
+	    <dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons-fileupload-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io-version}</version>
+		</dependency>
+  <!-- poi的jar包 -->
+	  <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>${poi-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi-version}</version>
+		</dependency>
+     
+  <!-- springmvc处理json需要的jar包 -->
+	   <dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>${jackson-version}</version>
+	  </dependency>
+  
+	  <dependency> 
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-annotations</artifactId>
+		    <version>${jackson-version}</version>
+	   </dependency>
+	    
+	   <dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>${jackson-version}</version>
+		</dependency> 
+   <!-- spring-security的jar包 -->
+      <dependency>  
+		    <groupId>org.springframework.security</groupId>  
+		    <artifactId>spring-security-web</artifactId>  
+		    <version>${org-springframework-security}</version>  
+      </dependency> 
+      <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-cas</artifactId>
+			<version>${org-springframework-security}</version>
+		</dependency>		
+		<dependency>
+		  <groupId>org.springframework.security</groupId>
+		  <artifactId>spring-security-config</artifactId>
+		  <version>${org-springframework-security}</version>
+		</dependency>		
+  
+  
+  
+  <!-- oracle的jar包 -->
+		<dependency>
+			<groupId>oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>${oracle-version}</version>
+		</dependency>
+
+  
+  <!-- jpa整合spring需要的jar包 -->
+	   <dependency>  
+	        <groupId>org.springframework.data</groupId>  
+	        <artifactId>spring-data-jpa</artifactId>  
+	        <version>${spring-data-jpa-version}</version> 
+	        <!-- <exclusions>
+	        <exclusion>
+	          <groupId>org.springframework</groupId>
+              <artifactId>spring-aop</artifactId>
+	        </exclusion>
+	        <exclusion>
+	          <groupId>org.springframework</groupId>
+              <artifactId>spring-core</artifactId>
+	        </exclusion>
+	        <exclusion>
+	          <groupId>org.springframework</groupId>
+              <artifactId>spring-tx</artifactId>
+	        </exclusion>
+	        <exclusion>
+	          <groupId>org.springframework</groupId>
+              <artifactId>spring-beans</artifactId>
+	        </exclusion>
+	        <exclusion>
+	          <groupId>org.springframework</groupId>
+              <artifactId>spring-beans</artifactId>
+	        </exclusion>
+	        <exclusion>
+	          <groupId>org.springframework</groupId>
+              <artifactId>spring-context</artifactId>
+	        </exclusion>
+	        </exclusions>  -->
+	     </dependency>   
+   
+   <!--hibernate整合 ehcache的jar包 -->
+   <dependency>  
+            <groupId>org.hibernate</groupId>  
+            <artifactId>hibernate-ehcache</artifactId>  
+            <version>${hiberte-version}</version>  
+    </dependency>  
+  <!--spring整合 ehcache的jar包 -->
+    <dependency>
+ 		   <groupId>net.sf.ehcache</groupId>
+		   <artifactId>ehcache</artifactId>
+		   <version>${ehcache-version}</version>
+	</dependency>
+  <!-- hibernate 需要的包 -->
+  	<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.1.8.Final</version>
+	</dependency>
+	 <dependency>  
+        <groupId>org.hibernate</groupId>  
+        <artifactId>hibernate-validator</artifactId>  
+        <version>5.0.0.Final</version>  
+    </dependency> 	
+   <!--  <dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-core</artifactId>
+		  <version>${hiberte-version}</version>
+	</dependency> -->
+	
+	<!-- quartz需要的jar包 -->
+    <dependency>
+		<groupId>org.quartz-scheduler</groupId>
+		<artifactId>quartz</artifactId>
+		<version>${quartz-version}</version>
+	</dependency>
+	<!-- 下面4个是jsonobject使用的依赖包 -->
+   <dependency>
+		<groupId>net.sf.json-lib</groupId>
+		<artifactId>json-lib</artifactId>
+		<version>${json-lib-version}</version>
+		<classifier>jdk15</classifier>
+	</dependency>
+  
+    <dependency>
+		<groupId>commons-collections</groupId>
+		<artifactId>commons-collections</artifactId>
+		<version>${commons-collections-version}</version>
+	</dependency>
+    <dependency>
+		<groupId>commons-beanutils</groupId>
+		<artifactId>commons-beanutils</artifactId>
+		<version>${commons-beanutils-version}</version>
+	</dependency>
+	
+    <dependency>
+		<groupId>commons-lang</groupId>
+		<artifactId>commons-lang</artifactId>
+		<version>${commons-lang-version}</version>
+	</dependency>
+	
+	
+   <!--junit需要的jar包  -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>${commons-dbcp-version}</version>
+	</dependency>
+	<!--jstl需要的jar包  -->
+    <dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+		<version>${jstl-version}</version>
+	</dependency>
+     <!-- spring framework -->
+<!-- 整合spring-security需要多添加下面这些依赖 -->	
+     <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${org.springframework.version}</version>
+	 </dependency>
+     <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework.version}</version>
+	</dependency>
+    <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${org.springframework.version}</version>
+	</dependency> 
+    <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${org.springframework.version}</version>
+	</dependency> 
+	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${org.springframework.version}</version>
+	</dependency>
+	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>${org.springframework.version}</version>
+	</dependency>
+	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework.version}</version>
+	</dependency>
+<!-- 整合spring-security需要多添加上面这些依赖 -->	
+	
+     
+     <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-web</artifactId>
+       <version>${org.springframework.version} </version>
+    </dependency>
+    
+    <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-webmvc</artifactId>
+       <version>${org.springframework.version} </version>
+        
+    </dependency>
+     <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-orm</artifactId>
+       <version>${org.springframework.version}</version>
+    </dependency>
+    
+    <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-test</artifactId>
+       <version>${org.springframework.version}</version>
+    </dependency>
+    
+    <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context-support</artifactId>
+	    <version>${org.springframework.version}</version>
+    </dependency>
+    
+	<!-- log4j的jar包 -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>${log4j-version}</version>
+	</dependency>
+	 <!-- 下面3个的是slf4j需要的jar包 -->
+  	<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j-version}</version>
+	</dependency>
+	<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-version}</version>
+	</dependency>
+	 <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j-version}</version>
+    </dependency>
+	<!-- mysql的jar包 -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>${mysql-connector-version}</version>
+	</dependency>
+     
+  </dependencies>
+  
+  <build>
+    <finalName>sshProjectn_jpa</finalName>
+  </build>
+</project>
