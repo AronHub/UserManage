@@ -1,4 +1,4 @@
-package com.fjt.buszi;
+package com.fjt.bussiness;
 
 import java.util.HashMap;
 import java.util.List;

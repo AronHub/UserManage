@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fjt.buszi.EmplyBuzii;
+import com.fjt.bussiness.EmplyBuzii;
 import com.fjt.pojo.Emplye;
 import com.fjt.service.EmplyeService;
 import com.fjt.util.ReadExcel;
@@ -75,20 +75,20 @@ public class EmplyeServiceImpl implements EmplyeService{
 	public String exportUp(MultipartFile file) {
 		// TODO Auto-generated method stub
 		String result="";
-		//´´½¨´¦ÀíÀà
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		ReadExcel readExcel=new ReadExcel();
-		//»ñÈ¡µ½excelµÄÐÅÏ¢
+		//ï¿½ï¿½È¡ï¿½ï¿½excelï¿½ï¿½ï¿½ï¿½Ï¢
 		List<Emplye> empList=new ArrayList<Emplye>();
 		empList=readExcel.readFile(file);
-		//ÅÐ¶Ï
+		//ï¿½Ð¶ï¿½
 	     if(empList!=null){
-	    	 result+="ÉÏ´«³É¹¦";
+	    	 result+="ï¿½Ï´ï¿½ï¿½É¹ï¿½";
 	    	 for(Emplye emp:empList){
 	    		 this.add(emp);
 	    	 }
 	    	
 	     }else{
-	    	 result+="ÉÏ´«Ê§°Ü";
+	    	 result+="ï¿½Ï´ï¿½Ê§ï¿½ï¿½";
 	    	 
 	     }
 		return result;

@@ -2,8 +2,7 @@ package com.fjt.control;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,9 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,221 +29,280 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fjt.pojo.User;
 import com.fjt.service.UserService;
+import com.fjt.util.PageUtil;
 
-
-//ÓÃ»§¹ÜÀí¿ØÖÆÆ÷
+/**
+ * 
+     * @ClassName: ç”¨æˆ·æ§åˆ¶å™¨
+     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
+     * @author fujiantao
+     * @date 2019å¹´8æœˆ1æ—¥
+     *
+ */
 @Controller
 public class UserControl {
-	private Logger logger=LoggerFactory.getLogger(UserControl.class);
-	
+	private Logger logger = LoggerFactory.getLogger(UserControl.class);
+
 	@Autowired
 	private UserService userservice;
-	
-	//·ÃÎÊÓÃ»§¹ÜÀí½çÃæ
-	@RequestMapping("userInfo")
-	public ModelAndView runUserInfo(){
-			String view="showInfo";
-			ModelAndView modelAndView=new ModelAndView(view);
-			return modelAndView;
+
+	/**
+	 * 
+	     * @Title: è®¿é—®ç”¨æˆ·ç®¡ç†ç•Œé¢
+	     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
+	     * @param @return å‚æ•°
+	     * @author fujiantao
+	     * @return ModelAndView è¿”å›ç±»å‹
+	     * @throws
+	 */
+	@RequestMapping("goUserView")
+	public ModelAndView goUserView() {
+		String view = "UserMange";
+		ModelAndView modelAndView = new ModelAndView(view);
+		return modelAndView;
 	}
-	
-	//±¨±íÉÏ´«
-	@RequestMapping("reportUp")
-	public void reportUp(@RequestParam("file")MultipartFile file,HttpServletRequest request){
-		String fileName=file.getOriginalFilename();
-		userservice.reportUp(file);
-		
-		
-	}
-	
-	//±¨±íÏÂÔØ
-	@RequestMapping("reporDown")
-	public void reporDown(HttpServletResponse response,HttpServletRequest request){
-		System.out.println("hellp");
-		XSSFWorkbook workbook=new XSSFWorkbook();
-		XSSFSheet sheet=workbook.createSheet("ÓÃ»§ĞÅÏ¢");
-		XSSFRow row=sheet.createRow(0);
-		XSSFCell cell=row.createCell(0);
-		cell.setCellValue("ÓÃ»§ID");
-		cell=row.createCell(1);
-		cell.setCellValue("ÓÃ»§Ãû");
-		cell=row.createCell(2);
-		cell.setCellValue("ÃÜÂë");
-		cell=row.createCell(3);
-		cell.setCellValue("µç»°");
-		cell=row.createCell(4);
-		cell.setCellValue("µØÖ·");
-		
-		List<User> users=new ArrayList<User>();
-		users=userservice.findAllUser();
-		for(int i=0;i<users.size();i++){
-			User user=users.get(i);
-			row=sheet.createRow(i+1);
-			row.createCell(0).setCellValue(user.getId());
-			row.createCell(1).setCellValue(user.getName());
-			row.createCell(2).setCellValue(user.getPssword());
-			row.createCell(3).setCellValue(user.getTelep());
-			row.createCell(4).setCellValue(user.getAddr());
-		}
-		
-		//ÏÂÔØ
-		OutputStream out=null;
-		try {
-			out=response.getOutputStream();
-			String fileName="ÓÃ»§ĞÅÏ¢±í.xlsx";
-			response.setContentType("application/x-msdownload");
-			//»ñÈ¡ä¯ÀÀÆ÷ÄÚºËĞÅÏ¢
-			String clientInfo=request.getHeader("User-agent");
-			//ÅĞ¶ÏÄÚºË
-			if(clientInfo!=null&&clientInfo.indexOf("MSIE")>0){
-				if(clientInfo.indexOf("MSIE 5")>0||clientInfo.indexOf("MSIE 6")>0){
-					 fileName=new String(fileName.getBytes("UTF-8"),"ISO-8859-1");
-				 }else{
-					 fileName=URLEncoder.encode(fileName,"UTF-8");
-				 }
-			}else if(clientInfo.indexOf("Trident")>0){
-				fileName=URLEncoder.encode(fileName,"UTF-8");
-			}else{
-				fileName=new String(fileName.getBytes("UTF-8"),"ISO-8859-1");
-			}
-			
-			response.setHeader("Content-Disposition", "attachment;fileName="+fileName);
-			workbook.write(out);
-			out.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-	}
-	
-	
-	//²éÑ¯/·ÖÒ³ÊµÏÖ
-	@RequestMapping("serchInfo")
+
+	/**
+	 * 
+	 * 
+	     * @Title: æŸ¥è¯¢/åˆ†é¡µå®ç°
+	     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
+	     * @param @param request
+	     * @param @param recevis
+	     * @param @return
+	     * @param @throws UnsupportedEncodingException å‚æ•°
+	     * @author fujiantao
+	     * @return Map<String,Object> è¿”å›ç±»å‹
+	     * @throws
+	 */
+	@RequestMapping("getUserInfo")
 	@ResponseBody
-	public Map<String,Object> serchInfo(HttpServletRequest request,@RequestParam Map<String,String> recevis) throws UnsupportedEncodingException
-	{
-		//½â¾öÖĞÎÄÂÒÂëÎÊÌâ¡£
+	public Map<String, Object> getUserInfo(HttpServletRequest request,
+			@RequestParam Map<String, Object> params) {
+		//è§£å†³ä¸­æ–‡ä¹±ç é—®é¢˜ã€‚
 		//String username=new String( request.getParameter("usernames").getBytes("ISO-8859-1"),"utf-8");
-		//getÌá½»ÖĞÎÄÂÒÂëµÄ½â¾ö·½·¨
-		//String username=new String(recevis.get("usernames").getBytes("ISO-8859-1"),"utf-8");
-		
-		//»ñÈ¡²éÑ¯ĞÅÏ¢
-		String username=recevis.get("usernames");
-		String telep=recevis.get("telep");
-		
-	    //»ñÈ¡Ò»Ò³ÓĞ¼¸ĞĞ¡£
-	    int pageRows=Integer.parseInt(request.getParameter("Rows"));
-	    //»ñÈ¡µ±Ç°Ò³¡£
-	    int pageNow=Integer.parseInt(request.getParameter("pageNow"))-1 ;
-	    //ÅÅĞò·½Ê½
-	    Sort sort=new Sort(Sort.Direction.ASC,"id");
-	    Pageable pageable=new PageRequest(pageNow,pageRows,sort);
-	    
-	    Map<String,Object> map=userservice.findPage2(pageable,username,telep);
-	    //Map<String,Object> map=userservice.findPage(pageable);
-        
-	    HashMap<String, Object> resultMap=new HashMap<String, Object>();
-	    resultMap.put("content", map.get("content"));
-	    resultMap.put("total", map.get("total"));
+
+		//è·å–æŸ¥è¯¢ä¿¡æ¯
+		String username = (String) params.get("usernames");
+		String telep = (String) params.get("telep");
+
+		Pageable pageable = PageUtil.getPageAble(params);
+
+		Map<String, Object> resultMap = userservice.getUserInfo(pageable,
+				username, telep);
+
 		return resultMap;
 	}
-	
-//	//Ìí¼ÓÓÃ»§:·½·¨Ò»
-//	@RequestMapping("adduser")
-//	@ResponseBody
-//	public String  add(@RequestParam Map<String,String> map) throws UnsupportedEncodingException{
-//		String username=map.get("name");
-//		String passw=map.get("pssword");
-//		String telep=map.get("telep");
-//		String addr=new String(map.get("addr").getBytes("ISO-8859-1"),"utf-8");
-//		User user=new User();
-//		user.setName(username);
-//		user.setPssword(passw);
-//		user.setTelep(telep);
-//		user.setAddr(addr);
-//		userservice.save(user);
-//		
-//		return "success";
-//	}
-	 
-    //Ìí¼ÓÓÃ»§  :·½·¨¶ş
+
+	/**
+	 * 
+	 * @Title: æŠ¥è¡¨ä¸Šä¼ 
+	 * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
+	 * @param @param file
+	 * @param @param request å‚æ•°
+	 * @author fujiantao
+	 * @return void è¿”å›ç±»å‹
+	 * @throws
+	 */
+
+	@RequestMapping("reportUpload")
+	public void reportUpload(@RequestParam("file") MultipartFile file,
+			HttpServletRequest request) {
+		String fileName = file.getOriginalFilename();
+		userservice.reportUpload(file);
+
+	}
+
+	/**
+	 * 
+	     * @Title: æŠ¥è¡¨å¯¼å‡º
+	     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
+	     * @param @param response
+	     * @param @param request å‚æ•°
+	     * @author fujiantao
+	     * @return void è¿”å›ç±»å‹
+	     * @throws
+	 */
+	@RequestMapping("reportDownLoad")
+	public void reportDownLoad(HttpServletResponse response,
+			HttpServletRequest request) {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet("ç”¨æˆ·ä¿¡æ¯");
+		XSSFRow row = sheet.createRow(0);
+		XSSFCell cell = row.createCell(0);
+		cell.setCellValue("ç”¨æˆ·ID");
+		cell = row.createCell(1);
+		cell.setCellValue("ç”¨æˆ·å");
+		cell = row.createCell(2);
+		cell.setCellValue("å¯†ç ");
+		cell = row.createCell(3);
+		cell.setCellValue("ç”µè¯");
+		cell = row.createCell(4);
+		cell.setCellValue("åœ°å€");
+
+		List<User> users = new ArrayList<User>();
+		logger.info("æŠ¥è¡¨å¯¼å‡ºå¼€å§‹ã€‚ã€‚ã€‚ã€‚");
+		//ä¸‹è½½
+		try (OutputStream out = response.getOutputStream()) {
+			//è·å–å‚æ•°
+			String userName = request.getParameter("usernames");
+			//ä½¿ç”¨è§£ç ï¼Œè§£å†³ä¸­æ–‡ä¹±ç é—®é¢˜ã€‚
+			if (userName != null) {
+				userName = URLDecoder.decode(userName, "utf-8");
+			}
+			String telep = request.getParameter("telep");
+
+			users = userservice.getUserBynameAndTelp(userName, telep);
+			for (int i = 0; i < users.size(); i++) {
+				User user = users.get(i);
+				row = sheet.createRow(i + 1);
+				row.createCell(0).setCellValue(user.getId());
+				row.createCell(1).setCellValue(user.getName());
+				row.createCell(2).setCellValue(user.getPssword());
+				row.createCell(3).setCellValue(user.getTelep());
+				row.createCell(4).setCellValue(user.getAddr());
+			}
+
+			String fileName = "ç”¨æˆ·ä¿¡æ¯è¡¨.xlsx";
+			response.setContentType("application/x-msdownload");
+			//è·å–æµè§ˆå™¨å†…æ ¸ä¿¡æ¯
+			String clientInfo = request.getHeader("User-agent");
+			//åˆ¤æ–­å†…æ ¸
+			if (clientInfo != null && clientInfo.indexOf("MSIE") > 0) {
+				if (clientInfo.indexOf("MSIE 5") > 0
+						|| clientInfo.indexOf("MSIE 6") > 0) {
+					fileName = new String(fileName.getBytes("UTF-8"),
+							"ISO-8859-1");
+				} else {
+					fileName = URLEncoder.encode(fileName, "UTF-8");
+				}
+			} else if (clientInfo != null
+					&& clientInfo.indexOf("Trident") > 0) {
+				fileName = URLEncoder.encode(fileName, "UTF-8");
+			} else {
+				fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+			}
+
+			response.setHeader("Content-Disposition",
+					"attachment;fileName=" + fileName);
+			workbook.write(out);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error("å¯¼å‡ºå‡ºé”™!", e.getMessage());
+		}
+
+	}
+
+	//	//æ·»åŠ ç”¨æˆ·:æ–¹æ³•ä¸€
+	//	@RequestMapping("adduser")
+	//	@ResponseBody
+	//	public String  add(@RequestParam Map<String,String> map) throws UnsupportedEncodingException{
+	//		String username=map.get("name");
+	//		String passw=map.get("pssword");
+	//		String telep=map.get("telep");
+	//		String addr=new String(map.get("addr").getBytes("ISO-8859-1"),"utf-8");
+	//		User user=new User();
+	//		user.setName(username);
+	//		user.setPssword(passw);
+	//		user.setTelep(telep);
+	//		user.setAddr(addr);
+	//		userservice.save(user);
+	//		
+	//		return "success";
+	//	}
+
+	/**
+	 * 
+	     * @Title: æ·»åŠ ç”¨æˆ·  :æ–¹æ³•äºŒ
+	     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
+	     * @param @param user
+	     * @param @return å‚æ•°
+	     * @author fujiantao
+	     * @return String è¿”å›ç±»å‹
+	     * @throws
+	 */
 	@RequestMapping("adduser")
 	@ResponseBody
-	//Èç¹û°´ÕÕpojo¶ÔÏóÀ´Ó³Éä£¬ÇëÇó²ÎÊı±ØĞëÒªºÍpojo¶ÔÏóµÄÊôĞÔÃûÒ»ÖÂ¡£
-	public String  add(User user) {
-		String addr = null;
+	//å¦‚æœæŒ‰ç…§pojoå¯¹è±¡æ¥æ˜ å°„ï¼Œè¯·æ±‚å‚æ•°å¿…é¡»è¦å’Œpojoå¯¹è±¡çš„å±æ€§åä¸€è‡´ã€‚
+	public String addUser(User user) {
 		try {
-			System.out.println("xxx="+user.getAddr());
-			addr = new String(user.getAddr().getBytes("ISO-8859-1"),"utf-8");
-		} catch (UnsupportedEncodingException e) {
+			String address = user.getAddr();
+			if (null != address) {
+				address = new String(user.getAddr().getBytes("ISO-8859-1"),
+						"utf-8");
+			}
+			user.setAddr(address);
+			userservice.save(user);
+			return "success";
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			logger.error("³öÏÖÁËÒì³£");
-			e.printStackTrace();
+			logger.error("ä¿å­˜å‡ºé”™!", e.getMessage());
+			return "error";
 		}
-		user.setAddr(addr);
-		userservice.save(user);
-		return "success";
+
 	}
-	
-	//É¾³ıÓÃ»§
-	@RequestMapping("delt")
-	public String delete(HttpServletRequest request){
-		int id = 0;
-		String idn=request.getParameter("id");
-		if(idn!=null&&!idn.equals("")){
-			//É¾³ıÒ»¸ö
-			if(!idn.contains(",")){ 
-				id=Integer.parseInt(idn);
-				userservice.delet(id);
-				//System.out.println("idn===="+idn);
-			}else{
-			//É¾³ı¶à¸ö
-			    String idArr[]=idn.split(",");
-				for(String sip_id:idArr){
-					
-					id=Integer.parseInt(sip_id);
-					userservice.delet(id);
-				}
+
+	/**
+	 * 
+	     * @Title: åˆ é™¤ç”¨æˆ·
+	     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
+	     * @param @param request
+	     * @param @return å‚æ•°
+	     * @author fujiantao
+	     * @return String è¿”å›ç±»å‹
+	     * @throws
+	 */
+	@RequestMapping("delete")
+	@ResponseBody
+	public String delete(HttpServletRequest request) {
+		String userID = request.getParameter("id");
+		//åˆ é™¤ä¸€ä¸ª
+		if (!userID.contains(",")) {
+			userservice.delet(Integer.parseInt(userID));
+		} else {
+			//åˆ é™¤å¤šä¸ª
+			String idArray[] = userID.split(",");
+			for (String id : idArray) {
+				userservice.delet(Integer.parseInt(id));
 			}
 		}
-		
-		
+
 		return "success";
 	}
-	
-	//ĞŞ¸Ä-»Ø¹éÊı¾İ
-	@RequestMapping("upretn")
+
+	/**
+	 * 
+	     * @Title: ä¿®æ”¹-å›å½’æ•°æ®
+	     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
+	     * @param @param request
+	     * @param @return å‚æ•°
+	     * @author fujiantao
+	     * @return Map<String,Object> è¿”å›ç±»å‹
+	     * @throws
+	 */
+	@RequestMapping("updateReturn")
 	@ResponseBody
-	public Map<String,Object> updRendata(HttpServletRequest request){
-		String id=request.getParameter("id");
-		int idn=1;
-		if(id!=null&&!id.equals("")){
-		   idn=Integer.parseInt(id);
-		}
-		User user=userservice.finOne(idn);
-		Map<String, Object> result=new HashMap<String, Object>();
+	public Map<String, Object> updateReturn(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		User user = userservice.finOne(Integer.parseInt(id));
+
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("user", user);
 		return result;
 	}
-	
-	//ĞŞ¸Ä²Ù×÷
+
+	//ä¿®æ”¹æ“ä½œ
 	@RequestMapping("updat")
 	@ResponseBody
-	public void updat(User user){
-	 //System.out.println("sdxx="+user.getId());
-	 
-	 User usr=userservice.finOne(user.getId());
-	 usr.setId(user.getId());
-	 usr.setAddr(user.getAddr());
-	 usr.setName(user.getName());
-	 usr.setPssword(user.getPssword());
-	 usr.setTelep(user.getTelep());
-	 userservice.save(usr);
+	public void updat(User user) {
+		User usr = userservice.finOne(user.getId());
+		usr.setId(user.getId());
+		usr.setAddr(user.getAddr());
+		usr.setName(user.getName());
+		usr.setPssword(user.getPssword());
+		usr.setTelep(user.getTelep());
+		userservice.save(usr);
 	}
 
 }

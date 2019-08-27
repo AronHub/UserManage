@@ -1,4 +1,13 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/fjt/control/ProjectContrl.java=GBK
+encoding//src/main/java/com/fjt/control/RoleControl.java=GBK
+encoding//src/main/java/com/fjt/control/UserControl.java=UTF-8
+encoding//src/main/java/com/fjt/pojo/Project.java=GBK
+encoding//src/main/java/com/fjt/repositery/custom/UserReporsCustom.java=GBK
+encoding//src/main/java/com/fjt/service/RoleService.java=GBK
+encoding//src/main/java/com/fjt/service/impl/RoleServiceImpl.java=UTF-8
+encoding//src/main/java/com/fjt/service/impl/UserSeviceImpl.java=GBK
+encoding//src/main/java/com/fjt/util/UserReporUp.java=GBK
 encoding//src/main/webapp/js=UTF-8
-encoding//src/main/webapp/js/showInfo.js=UTF-8
+encoding//src/main/webapp/js/userManage.js=UTF-8
 encoding//src/main/webapp/jsp/main.jsp=UTF-8

@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="../js/jquery-1.11.0.js"></script>
-<script type="text/javascript" src="../js/proMage.js"></script>
+<script type="text/javascript" src="../js/project.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 function checkFile(){
 	var fileName=$("input[name='file']").val();
@@ -35,7 +36,7 @@ function checkFile(){
 <td><input type="checkbox" class="checkAll">全选</td>
 <td>id</td>
 <td>项目名称</td>
-<td>用户</td>
+<td>经理</td>
 </tr>
 
 <tbody class="cont">

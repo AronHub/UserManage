@@ -8,15 +8,16 @@ import org.springframework.data.domain.Pageable;
 import com.fjt.pojo.User;
 
 /**
- * Õâ±ßÊÇ×Ô¶¨Òå·½·¨µÄ½Ó¿Ú
- * ÓĞĞ©·½·¨µÄ¹¦ÄÜĞèÒª×Ô¼ºÈ¥ÊµÏÖ£¬ËùÒÔĞèÒª°Ñ·½·¨³éÈ¡³öÀ´£¬·ÅÔÚ×Ô¶¨Òå·½·¨µÄ½Ó¿ÚÉÏ£¬
- * È»ºóÔÚ´´½¨Ò»¸öÊµÏÖÀà£¨UserReposImpl£©£¬ÔÚUserReposImplÊµÏÖ×Ô¼ºÏëÒªÊµÏÖµÄ¹¦ÄÜ
+ * è¿™è¾¹æ˜¯è‡ªå®šä¹‰æ–¹æ³•çš„æ¥å£
+ * æœ‰äº›æ–¹æ³•çš„åŠŸèƒ½éœ€è¦è‡ªå·±å»å®ç°ï¼Œæ‰€ä»¥éœ€è¦æŠŠæ–¹æ³•æŠ½å–å‡ºæ¥ï¼Œæ”¾åœ¨è‡ªå®šä¹‰æ–¹æ³•çš„æ¥å£ä¸Šï¼Œ
+ * ç„¶ååœ¨åˆ›å»ºä¸€ä¸ªå®ç°ç±»ï¼ˆUserReposImplï¼‰ï¼Œåœ¨UserReposImplå®ç°è‡ªå·±æƒ³è¦å®ç°çš„åŠŸèƒ½
  * @author posdev
  *
  */
-//×Ô¶¨Òå·ÖÒ³²éÑ¯ÊµÏÖ
+//è‡ªå®šä¹‰åˆ†é¡µæŸ¥è¯¢å®ç°
 public interface PageCustom {
-	
-	public Page<User> HiberPage(Map<String,Object> map,Pageable pageable,String jpql);
+
+	public Page<User> HiberPage(Map<String, Object> map, Pageable pageable,
+			String jpql);
 
 }

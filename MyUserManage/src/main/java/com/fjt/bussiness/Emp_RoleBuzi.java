@@ -1,4 +1,4 @@
-package com.fjt.buszi;
+package com.fjt.bussiness;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

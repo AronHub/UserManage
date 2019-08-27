@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="proj_user")
 @Entity
 @SequenceGenerator(name="seq_projuser",sequenceName="seq_projuser",allocationSize=1)
-public class ProjUser {
+public class ProjectUser {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq_projuser")

@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
+<title>角色管理</title>
 
 <script type="text/javascript" src="../js/jquery-1.11.0.js"></script>
 <script type="text/javascript" src="../js/roleinfo.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 function Exrepot(){
 	var fileName=$("input[name='file']").val();
@@ -66,10 +67,6 @@ function Exrepot(){
 <input type="button" value="删除" class="delt">
 <input type="button" value="删除所有" class="deltAll">
 <input type="button" value="修改" class="update">
-<input type="button" value="id查询">
-<input type="button" value="查询所有">
-<input type="button" value="条件查询">
-<input type="button" value="跑批任务">
 </div>
 
 <%--幕布 --%>

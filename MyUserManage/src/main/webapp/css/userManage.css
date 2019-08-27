@@ -45,10 +45,29 @@
 	margin-top:10px
 }
 
-.pagem{
+/* #pagem{
 	text-decoration:none;
 	margin-left:3.6px;
+	
+} */
+
+#pagem {
+COLOR:#565656; TEXT-DECORATION: none
 }
+
+#pagem:hover {
+COLOR:red; TEXT-DECORATION: underline
+}
+
+#pagem:active {
+COLOR: #DC241F;TEXT-DECORATION: none
+}
+
+#pagem:visited {
+COLOR: red;TEXT-DECORATION: none
+}
+
+
 
 #sum_Page{
 	margin-left:65px;

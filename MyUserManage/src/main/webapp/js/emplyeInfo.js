@@ -1,6 +1,6 @@
 var base={
 		domain:window.location.protocol + "//" + window.location.host
-		+"/sshProjectn_jpa/"
+		+"/MyUserManage/"
 }
 var PageNow=1;
 var pageCount=3;

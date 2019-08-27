@@ -1,6 +1,6 @@
 var base={
 		domain:window.location.protocol + "//" + window.location.host
-		+"/sshProjectn_jpa/"
+		+"/MyUserManage/"
 }
 var pageNow=1;
 var pageCount=3;
@@ -17,7 +17,11 @@ $(document).ready(function(){
 	
 	$(".reportDown").click(function(){
 		
-		window.location.href=base.domain+"projeView/reportDown";
+		 var projeName=$(".projName").val();
+		 var projeNo=$(".projNo").val();
+		 
+		 projeName=encodeURI(encodeURI(projeName));
+		 window.location.href=base.domain+"projeView/reportDown?projectName="+projeName +"&projectId="+projeNo;
 	})
 	
 	$(".reportUp").click(function(){
@@ -37,10 +41,10 @@ $(document).ready(function(){
 function init(pageNow,projeName,projeNo){
 	$.ajax({
 		async:true,
-		url:base.domain+"projeView/serch",
+		url:base.domain+"projeView/getProjectInfo",
 		data:{
 			pageNow:pageNow,
-			pageCount:pageCount,
+			Rows:pageCount,
 			projeName:projeName,
 			projeNo:projeNo
 		},
@@ -56,7 +60,7 @@ function init(pageNow,projeName,projeNo){
 						"<td><input type='checkbox' class='chek'></td>"+
 						"<td>"+content[i].id+"</td>"+
 						"<td>"+content[i].name+"</td>"+
-						"<td> </td>"+
+						"<td>"+content[i].manager+"</td>"+
 						"</tr>"	
 				
 			}

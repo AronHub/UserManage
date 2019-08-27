@@ -8,12 +8,13 @@ import org.springframework.data.domain.Pageable;
 import com.fjt.pojo.Role;
 
 public interface RolereportCustom {
-	
-   public Page<Role> serPage(Pageable pageable,Map<String,Object> map,String jpql);
-   
-   public void delteRole(int id);
-   
-   public void deltAll();
-   
-   public Role selcByid(int id);
+
+	public Page<Role> findRoleInfo(Pageable pageable, Map<String, Object> map,
+			String jpql);
+
+	public void delteRole(int id);
+
+	public void deltAll();
+
+	public Role getRoleByID(int id);
 }

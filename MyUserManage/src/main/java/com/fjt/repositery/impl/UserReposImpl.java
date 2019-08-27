@@ -1,6 +1,5 @@
 package com.fjt.repositery.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,50 +13,50 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import com.fjt.pojo.User;
+import com.fjt.repositery.UserRepos;
 import com.fjt.repositery.custom.PageCustom;
 import com.fjt.repositery.custom.UserReporsCustom;
-import com.fjt.service.UserService;
 
 /**
- * Õâ±ßÊÇ×Ô¶¨Òå½Ó¿ÚµÄÊµÏÖÀà£¬Õâ±ßÖ÷ÒªÊµÏÖÀàµÄÃû³Æ£¨Ç°×ºÊÇ£ºUserRepos£©
- * @author posdev
+ * è¿™è¾¹æ˜¯è‡ªå®šä¹‰æ¥å£çš„å®ç°ç±»ï¼Œè¿™è¾¹ä¸»è¦å®ç°ç±»çš„åç§°ï¼ˆå‰ç¼€æ˜¯ï¼šUserReposï¼‰
+ * @author fujiantao
  *
  */
-public class UserReposImpl implements UserReporsCustom,PageCustom{
+public class UserReposImpl implements UserReporsCustom, PageCustom {
 
 	@PersistenceContext
 	private EntityManager entitymanager;
-	
+
 	@Autowired
-	private UserService userservice;
-	
-	@Override
-	public void contAll() {
-		// TODO Auto-generated method stub
-		System.out.println("Õâ±ßÊÇ²Ù×÷Êı¾İ¿âµÄ´úÂë");
-	}
+	private UserRepos userRepos;
 
 	@Override
-	public Page<User> HiberPage(Map<String,Object> map,Pageable pageable,String jpql) {
+	public Page<User> HiberPage(Map<String, Object> map, Pageable pageable,
+			String jpql) {
 		// TODO Auto-generated method stub
-	    Query query=entitymanager.createQuery(jpql);
-	    //setFirstResult±íÊ¾´ÓµÚ¼¸Ìõ¿ªÊ¼¡£
+		Query query = entitymanager.createQuery(jpql);
+		//setFirstResultè¡¨ç¤ºä»ç¬¬å‡ æ¡å¼€å§‹ã€‚
 		query.setFirstResult(pageable.getOffset());
-		//setMaxResults±íÊ¾È¡¼¸Ìõ¼ÇÂ¼¡£
+		//setMaxResultsè¡¨ç¤ºå–å‡ æ¡è®°å½•ã€‚
 		query.setMaxResults(pageable.getPageSize());
-		
-		for(Map.Entry<String,Object> entry:map.entrySet()){
-			String key=entry.getKey();
-			Object value=entry.getValue();
-			//System.out.println("key="+key+"value="+value);
+
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
 			query.setParameter(key, value);
 		}
 		@SuppressWarnings("unchecked")
-	    List<User> content=query.getResultList();
-		List<User> users=userservice.findAllUser();
-		int total=users.size();
-	    Page<User> pge=new PageImpl<User>(content,pageable,total); 
-		return pge;
+		List<User> content = query.getResultList();
+		List<User> userList = userRepos.findAllUser();
+		int total = userList.size();
+		Page<User> pageUser = new PageImpl<User>(content, pageable, total);
+		return pageUser;
+	}
+
+	@Override
+	public void contAll() {
+		// TODO Auto-generated method stub
+		System.out.println("è¿™è¾¹æ˜¯æ“ä½œæ•°æ®åº“çš„ä»£ç ");
 	}
 
 }

@@ -1,7 +1,3 @@
-var base={
-	domain:window.location.protocol + "//" + window.location.host
-	+"/sshProjectn_jpa/"	
-}
 //设置页码变量
 var pageNow=1;
 var pageCount=3;
@@ -12,7 +8,11 @@ $(document).ready(function(){
 	inint(1);
 	//报表下载
 	$(".repotDown").click(function(){
-	    window.location.href=base.domain+"role/reportDowmn"
+		var rolename=$(".rolename").val(); 
+		var levl=$(".levl").val();
+		//这边需要使用两次encodeURI，但vue框架就只要使用一次encodeURI就可以
+		rolename=encodeURI(encodeURI(rolename));
+	    window.location.href=base.domain+"role/reportDownLoad?rolename="+rolename+"&levl="+levl
 	})
 	
 	//报表上传
@@ -64,7 +64,7 @@ $(document).ready(function(){
      	$(".del_sure").click(function(){
      		
      		$.ajax({
-     			url:base.domain+"role/delRole",
+     			url:base.domain+"role/deleteRole",
      			data:{
      				id:id
      			},
@@ -120,7 +120,7 @@ $(document).ready(function(){
 		}else{
 			var id=$(".check:checked").val();
 			$.ajax({
-				url:base.domain+"role/SerchByid",
+				url:base.domain+"role/getRoleByID",
 				data:{
 					id:id
 				},
@@ -141,14 +141,14 @@ $(document).ready(function(){
 		//修改-确定
 		$(".up_sure").click(function(){
 			var rolename=$("input[name='up_rolnas']").val();
-			var levl=$("input[name='up_levl']").val();
+			//var levl=$("input[name='up_levl']").val();
 			var id=$(".check:checked").val();
 			$.ajax({
 				url:base.domain+"role/updatRole",
 				data:{
 					id:id,
 					name:rolename,
-					levl:levl
+					//levl:levl
 				},
 				success:function(){
 					alert("修改成功")
@@ -301,9 +301,9 @@ function inint(pageNow,rolename,levl){
 			levl:levl,
 			rolename:rolename,
 			pageNow:pageNow,
-			pageCount:pageCount
+			Rows:pageCount
 		}, 
-		url:base.domain+"role/serfind",
+		url:base.domain+"role/findRoleInfo",
 		success:function(data){
 			  var cont=data.content;
 			  //获取总页数

@@ -1,7 +1,3 @@
-var base={
-		domain:window.location.protocol + "//" + window.location.host
-		+"/sshProjectn_jpa/"
-}
 var pageRows=3;
 var pageNow=1;
 //页码控制的变量
@@ -11,10 +7,16 @@ var mind=3;
 $(document).ready(function(){
 	//初始化操作
 	InitUser(pageNow);
-	//报表下载
+	
+
+	//报表导出
 	$("#reportDown").click(function(){
+		var usernames=$("input[name=username]").val();
+		var telep=$("input[name=teleps]").val();
+		//这边需要使用两次encodeURI，但vue框架就只要使用一次encodeURI就可以
+		usernames=encodeURI(encodeURI(usernames));
 		
-		window.location.href=base.domain+"reporDown";
+		window.location.href=base.domain+"reportDownLoad?usernames="+usernames+"&telep="+telep;
 	})
 	
 	//报表上传
@@ -37,6 +39,7 @@ $(document).ready(function(){
 	    var passw= $("input[name='ad_passw']").val(); 
 		var telep=$("input[name='ad_telp']").val();
 		var addr=$("input[name='ad_addr']").val();
+		
 		var addcotxt={
 			name:username,
 			pssword:passw,
@@ -48,10 +51,15 @@ $(document).ready(function(){
 		   data:addcotxt,
 		   url:base.domain+"adduser",
 		   success:function(data){
-			   alert("添加用户成功");
-			   $(".fubull").css("display","none");
-			   $(".addView").css("display","none");
-			   InitUser(1);
+			   if(data=="success"){
+				   alert("添加用户成功");
+				   $(".fubull").css("display","none");
+				   $(".addView").css("display","none");
+				   InitUser(1); 
+			   }else{
+				   alert("添加失败!");
+			   }
+			  
 		   },
 		   err:function(){
 			   alert("抱歉，添加失败");
@@ -80,7 +88,7 @@ $(document).ready(function(){
 	  }
 		
 	})
-	//删除——确定
+	//删除--确定
 	$("input[name='de_sure']").click(function(){
 		//获取到用户id 
 		  var id='';
@@ -100,13 +108,16 @@ $(document).ready(function(){
 		  
 		  $.ajax({
 			  type:"post",
-			  url:base.domain+"delt",
+			  url:base.domain+"delete",
 			  data:{"id":id},
 			  success:function(data){
-				 alert("删除成功");
-				 $(".delView").css("display","none");
-				 $(".fubull").css("display","none");
-				 InitUser(1);
+				  if(data=="success"){
+					 alert("删除成功");
+					 $(".delView").css("display","none");
+					 $(".fubull").css("display","none");
+					 InitUser(1);
+				  }
+			
 				 
 			  },
 			  err:function(){
@@ -134,7 +145,7 @@ $(document).ready(function(){
 			var upt_id=$(".chekbox:checked").attr("value")
 			//alert("upt_id="+upt_id)
 			$.ajax({
-				url:base.domain+"upretn",
+				url:base.domain+"updateReturn",
 				data:{"id":upt_id},
 				success:function(data){
 					//让数据回显
@@ -264,17 +275,20 @@ function cleantext(){
 
 //换页码事件
 function exchagePage(obj){
+	var pagesdfd=$(".tznr").val();
+	pageNow=obj;
+	cleantext();
+    InitUser(pageNow);
+    //更改页码的颜色
+    $("#pagem"+obj).css("color","blue");
+   
 	  
-	   pageNow=obj;
-       cleantext();
-	   InitUser(pageNow);
 } 
 
 //回城实现
 function remove(){
 	//页码控制，大于第一页的才能操作。
 	if(pageNow>1){
-		//alert("page="+pageNow+"mind="+mind);
 		
 		if(pageNow==(mind-2)){
 			mind-=3;
@@ -285,12 +299,13 @@ function remove(){
 	}else{
 		alert("不好意思，你已超标！");
 	}
-	
+	 //更改页码的颜色
+    $("#pagem"+pageNow).css("color","blue");
 }
 //前进实现
 function premove(){
 	//获取总页码
-	var max=$("#sum_Page").text();
+	var max=parseInt($("#sum_Page").text());
 	//页码控制，小于总页码的才能操作。
 	if(pageNow<max){
 		if(pageNow==mind){
@@ -301,20 +316,50 @@ function premove(){
 	}else{
 		alert("不好意思，你已超标！");
 	}
-
+	 //更改页码的颜色
+    $("#pagem"+pageNow).css("color","blue");
 }
 //跳转实现
 function jump(){
-	var pagenowx=$(".tznr").val();
-	var man=$("#sum_Page").text();
-	if(pagenowx>=1&&pagenowx<=man){
-		
+	//输入的页码
+	var pagenowx=parseInt($(".tznr").val());
+	//parseInt方法把字符串转换成整数
+	var max=parseInt($("#sum_Page").text());
+	var value=pagenowx%3;
+	//parseInt方法可以丢弃小数部分,保留整数部分
+	var move=parseInt(pagenowx/3);
+	if(pagenowx>pageNow){
+		if(value==0){
+			//整除情况
+			mind+=(move-1)*3;
+			pageNow=pagenowx;
+		}else{
+			//有余数情况
+			if(value>=1&&move!=0){
+				mind+=move*3;
+			}
+			pageNow=pagenowx;
+		}
 	}else{
-		alert("不好意思，超标了！");
+		if(value==0){
+			mind=move*3;
+			pageNow=pagenowx;
+		}else{
+			//有余数情况
+			move!=0?mind=move*3+1:mind=3;
+			pageNow=pagenowx;
+		}
 	}
 	
 	
+	if(pagenowx<1||pagenowx>max){
+		alert("不好意思，超标了！");
+	}
+	
 	InitUser(pagenowx);
+	 //更改页码的颜色
+    $("#pagem"+pagenowx).css("color","blue");
+	
 }
 //获取user数据
 function InitUser(pageNow){
@@ -324,6 +369,7 @@ function InitUser(pageNow){
 	var telep=$("input[name=teleps]").val();
 	
 	$.ajax({
+		async:false,
 		type:"post", 
 	    //以下面的data方式传送参数，不会出现乱码问题。
 	    data:{
@@ -332,8 +378,8 @@ function InitUser(pageNow){
 	    	Rows:pageRows,
 	    	pageNow:pageNow
 	    },
-//	    url:base.domain+"serchInfo?usernames="+usernames+"&telep="+telep,  //如果是这样传中文参数，则会出现中文乱码。
-	    url:base.domain+"serchInfo",
+	    //url:base.domain+"serchInfo?usernames="+usernames+"&telep="+telep,  //如果是这样传中文参数，则会出现中文乱码。
+	    url:base.domain+"getUserInfo",
 	    success:function(data){
 	    	//内容
 	    	var content=data.content;
@@ -344,7 +390,6 @@ function InitUser(pageNow){
 	    	var continfo='';
 	    	var pageView='<div class="previewn">';
 	    	//alert("输出第二个对象的name:"+content[1].name);
-	    	//alert("content"+content)
 	    	if(total%pageRows==0)
     		{ 
 	    		pageCount=total/pageRows;
@@ -377,15 +422,15 @@ function InitUser(pageNow){
 	    		for(j;j<=pageCount;j++)
     			{   
 	    			if(j<=mind){
-	    				pageView+='<span id="pagem" onclick=exchagePage('+j+')>'+'<'+j+'>'+'</span>'
+	    				pageView+='<span id="pagem'+j+'" value="10" onclick=exchagePage('+j+')>'+'<'+j+'>'+'</span>'
 	    			}
 	    			
     			}  
 	    		pageView+='<span onclick=premove()><前进></span>'
-	    		//显示总页码	
+	    		//显示总页码		
 	    		pageView+='<span id="sum_Page">'+pageCou+'</span>页' 
 	    		//显示跳转框
-	    		pageView+='<input type="text" class="tznr"><input type="button" onclick=jump()  value="跳转"></div>'
+	    		pageView+='<input type="text" class="tznr"><input  type="button" onclick=jump()  value="跳转"></div>'
 	            $(".page").prepend(pageView);   
 	
 	    	}else{

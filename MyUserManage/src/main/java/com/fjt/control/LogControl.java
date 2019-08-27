@@ -1,35 +1,37 @@
 package com.fjt.control;
 
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fjt.pojo.User;
 import com.fjt.service.UserService;
-//·ÃÎÊµÇÂ¼¿ØÖÆÆ÷
+
+/**
+ * 
+     * @ClassName: ç™»å½•æ§åˆ¶å™¨
+     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªç±»çš„ä½œç”¨)
+     * @author fujiantao
+     * @date 2019å¹´8æœˆ1æ—¥
+     *
+ */
 @Controller
-public class LogControl{
+public class LogControl {
 
 	@Autowired
 	private UserService userService;
-	
-	//²âÊÔ×Ô¶¨Òå·½·¨µÄ½Ó¿Ú
-	@RequestMapping("autorep")
-	public String autoReposity(){
-		userService.count();
-		return "success";
-	}
-	
-	//·ÃÎÊindex.jsp½çÃæ
-	@RequestMapping("/")
-	public String index(){
-		return "index";
-	}
-	
 
-	
-	
-	
+	/**
+	 * 
+	     * @Title: è·³è½¬åˆ°ç™»å½•ç•Œé¢
+	     * @Description: TODO(è¿™é‡Œç”¨ä¸€å¥è¯æè¿°è¿™ä¸ªæ–¹æ³•çš„ä½œç”¨)
+	     * @param @return å‚æ•°
+	     * @author fujiantao
+	     * @return String è¿”å›ç±»å‹
+	     * @throws
+	 */
+	@RequestMapping("/")
+	public String index() {
+		return "Longin";
+	}
+
 }

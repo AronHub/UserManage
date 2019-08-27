@@ -3,7 +3,7 @@ package com.fjt.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fjt.buszi.Emp_RoleBuzi;
+import com.fjt.bussiness.Emp_RoleBuzi;
 import com.fjt.pojo.Emp_Role;
 import com.fjt.pojo.Role;
 import com.fjt.service.Emp_RoleService;
