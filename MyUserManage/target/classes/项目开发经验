@@ -1,0 +1,4 @@
+1.如何使用SendRedirect()还是forward()?
+答：如果可以使用forward()就不要使用SendRedirect()
+
+2.cookie内容值如果存在中文就会报错，所以得把它用URLEncoder进行编码.然后从Cookie中取出内容的时候要用URLDecoder进行解码
