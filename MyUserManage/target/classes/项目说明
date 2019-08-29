@@ -1,4 +1,6 @@
 1.这个是一个用户管理系统，使用了Spring+springmvc+hibernate+oracle技术
 2.使用了cookie技术实现了保存用户名 以及上一次登录时间
+3.使用了session计数，保存用户信息
+
 
 
