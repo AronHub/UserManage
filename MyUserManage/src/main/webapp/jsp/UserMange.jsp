@@ -62,6 +62,7 @@ function exreport(){
 <input type="button" value="添加" class="addn">&nbsp;
 <input type="button" value="删除" class="delet">&nbsp;
 <input type="button" value="修改" class="updat">&nbsp;
+<input type="button" value="下载资源" class="downResource">&nbsp;
 </div>
 </div>
 

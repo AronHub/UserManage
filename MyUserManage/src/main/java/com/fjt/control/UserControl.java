@@ -1,5 +1,6 @@
 package com.fjt.control;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,6 +47,9 @@ public class UserControl {
 
 	@Autowired
 	private UserService userservice;
+
+	@Autowired
+	private ServletContext servletContext;
 
 	/**
 	 * 
@@ -303,6 +308,41 @@ public class UserControl {
 		usr.setPssword(user.getPssword());
 		usr.setTelep(user.getTelep());
 		userservice.save(usr);
+	}
+
+	/**
+	 * 
+	     * @Title: 下载资源(可以下载mp3,jpg,等资源文件)
+	     * @Description: TODO(这里用一句话描述这个方法的作用)
+	     * @param  参数
+	     * @author fujiantao
+	     * @return void 返回类型
+	     * @throws
+	 */
+	@ResponseBody
+	@RequestMapping("/downResource")
+	public void downResource(HttpServletRequest request,
+			HttpServletResponse response) {
+		String fileName = "dream.mp3";
+		response.setHeader("Content-Disposition",
+				"attachment;fileName=" + fileName);
+		//1.获取要下载的文件的全路径
+		String path = servletContext.getRealPath("/imgs/dream.mp3");
+		try (OutputStream os = response.getOutputStream();
+				FileInputStream fis = new FileInputStream(path);) {
+
+			//做一个缓存字节数组
+			byte[] buff = new byte[1024];
+			int len = 0;//表示实际每次读取了多少字节。
+			while ((len = fis.read(buff)) > 0) {
+				os.write(buff, 0, len);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

@@ -240,7 +240,10 @@ $(document).ready(function(){
 		}
 	})
 	
-	
+	///////////////////////导出资源//////////////////////////
+		$(".downResource").click(function(){
+			window.location.href=base.domain+"downResource";
+		})
 	
 })
 
