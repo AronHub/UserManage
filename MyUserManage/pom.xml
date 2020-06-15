@@ -23,7 +23,7 @@
      <!-- 下面4个是jsonobject使用的依赖包 -->
      <commons-lang-version>2.6</commons-lang-version>
      <commons-beanutils-version>1.8.3</commons-beanutils-version>
-	 <commons-collections-version>3.2.1</commons-collections-version>
+	 <commons-collections-version>3.2.2</commons-collections-version>
 	 <json-lib-version>2.4</json-lib-version>
 	 <!-- quartz需要的jar包 -->
 	 <quartz-version>2.2.1</quartz-version>	
