@@ -26,7 +26,7 @@
 	 <commons-collections-version>3.2.1</commons-collections-version>
 	 <json-lib-version>2.4</json-lib-version>
 	 <!-- quartz需要的jar包 -->
-	 <quartz-version>2.2.1</quartz-version>	
+	 <quartz-version>2.3.2</quartz-version>	
 	  <!-- hibernate 需要的包 -->
 	 <hiberte-version>4.1.8.Final</hiberte-version>	
 	  <!-- ehcache的jar包 -->
