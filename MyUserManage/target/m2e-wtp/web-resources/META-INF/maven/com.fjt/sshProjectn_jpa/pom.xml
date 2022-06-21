@@ -16,7 +16,7 @@
      <!--log4j需要的jar包  -->
      <log4j-version>1.2.17</log4j-version>
      <!-- mysql需要的jar包 -->
-     <mysql-connector-version>5.1.21</mysql-connector-version>
+     <mysql-connector-version>8.0.28</mysql-connector-version>
      <!-- jstl需要的jar包 -->
      <jstl-version>1.2</jstl-version>
      <commons-dbcp-version>1.4</commons-dbcp-version>
