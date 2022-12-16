@@ -12,7 +12,7 @@
      <!-- poi的jar包 -->
      <poi-version>3.7</poi-version>
      <!-- spring需要的jar包 --> 
-     <org.springframework.version>3.2.8.RELEASE</org.springframework.version>
+     <org.springframework.version>5.2.20.RELEASE</org.springframework.version>
      <!--log4j需要的jar包  -->
      <log4j-version>1.2.17</log4j-version>
      <!-- mysql需要的jar包 -->
@@ -295,7 +295,7 @@
     <dependency>
        <groupId>org.springframework</groupId>
        <artifactId>spring-webmvc</artifactId>
-       <version>${org.springframework.version} </version>
+       <version>${org.springframework.version}</version>
         
     </dependency>
      <dependency>
